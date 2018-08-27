@@ -1,0 +1,49 @@
+version: '1'
+services:
+  load-balancer: 
+    restart: always
+    image: nginx
+    volumes:
+      - ./bibjogos-nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8080:80
+    depends_on:
+      - jogos-front-0
+      - jogos-front-1
+
+  jogos-front-0:
+    restart: always
+    build:  ./front
+    container_name: client-docker-0
+    ports:
+      - 4200:4200
+    depends_on:
+      - jogos-back
+ 
+  jogos-front-1:
+    restart: always
+    build:  ./front
+    container_name: client-docker-1
+    ports:
+      - 4201:4200
+    depends_on:
+      - jogos-back
+ 
+
+  jogos-back:
+    restart: always
+    build:  ./back
+    container_name: ws-docker
+    ports:
+      - 8081:8086
+    depends_on:
+      - mysql-docker
+  
+  mysql-docker:
+    restart: always
+    image: mysql:5.6
+    container_name: mysql-docker
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=miga_sl_db
+      - MYSQL_PASSWORD=root

@@ -1,0 +1,7 @@
+export interface IJogo {
+    id?: Int32Array;
+    nome: string;
+    plataforma?: string;
+	produtora?: string;
+}
+
