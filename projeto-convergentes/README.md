@@ -2,3 +2,4 @@
 
 #Participantes
 #Gabriel Retcheski
+#Ricardo Duarte
